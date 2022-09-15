@@ -1,0 +1,95 @@
+{
+    "ip": "https://stage-data-input.snappyflow.io:443/sfmetrics/topics",
+    "__ip_description__": "each topic in below list will be appended to above ip. IP can use http/https",
+    "kafka_topics": ["log-dgfpsxrg"],
+    "__auth_token_description__": "Auth token to use while sending data",
+    "auth_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0IjoiZGdmcHN4cmcvZGdmcHN4cmciLCJpc3MiOiJsb2dhcmNoaXZhbCJ9.R4AqrYEY9M61P4NR8Ui2V6DSlcNEYnUqeQidz5tfSME",
+    "__varTags_description__": "Variable tags to be added in the logs. Specify the list of values for these tags and one of them will be picked randomly.",
+    "varTags": {
+      "_tag_Name": ["name1", "name2"],
+      "_plugin": ["plugin1"],
+      "_tag_componentName": ["component1", "component2"],
+      "_tag_containerName": ["container1","container2"],
+      "myTag":["tag1","tag.$INT", "tag.$IP", "tag.$STRING"]
+    },
+    "__tags_description__": "Tags to be added in the logs",
+    "tags": {
+      "_tag_projectName": "log_gen_kafka",
+      "_tag_appName": "log_gen_test",
+      "_tag_Name": "syslog-gen-proc-1",
+      "_plugin": "linux-syslog",
+      "_documentType": "syslog"
+    },
+    "__extTags_description__": "Extended tags to be added in the logs. Specify the tag name, tag value, and its life period (hours/day). These tags will be added to the logs for this ife period.",
+    "extTags": [
+        {
+            "key": "key1",
+            "value": "value1",
+            "life_period": "0.06h"
+        },
+        {
+            "key": "key2",
+            "value": "value2",
+            "life_period": "0.015h"
+        }  
+    ],
+    "extraJson": {
+      "path": "/utl/pnb/[id]/agent/[id]",
+      "browser": "Other",
+      "uriquery": "merchant_ref_id=892997",
+      "clientip": "192.168.29.165",
+      "sitename": "W3SVC1",
+      "host": "venu.snappyflow.io",
+      "serverip": "192.168.29.55",
+      "browser_version": "Unknown",
+      "Cookie": "-",
+      "Agent": "Dalvik/2.1.0+(Linux;+U;+Venu+8.1.0;+vivo+1815+Build/O11019)",
+      "OS_version": "Unknown",
+      "method": "GET",
+      "Referer": "-",
+      "browser_name": "Other",
+      "node": "DMT-WEB04",
+      "device_brand": "Generic",
+      "log_index": "",
+      "normalized_path": "/utl/pnb/v1/[norm]/[norm]/"
+    },
+    "__max_bulk_count_kafka_description__": "Maximum number of logs to send in 1 API call to kafka topic",
+    "max_bulk_count_kafka": 100,
+    "__max_bulk_count_file_description__": "Maximum number of logs to send in 1 call to file. Set this to a lesser value for an accurate rollover of log files",
+    "max_bulk_count_file": 100,
+    "__max_bulk_size_description__": "Maximum number of bytes to send in 1 API call",
+    "max_bulk_size": 300000,
+    "__logs_per_min_file_description__": "Number of logs to send in 1 minute to the file specified below",
+    "logs_per_min_file": 350000,
+    "__logs_per_min_kafka_description__": "Number of logs to send in 1 minute to the kafka topic specified below",
+    "logs_per_min_kafka": 100,
+    "__flush_interval_description__": "If value is 5, logs are bulked and sent at a 5s interval i.e. Every 5 seconds in a minute logs are bulked based max_bulk_sizeThis value has to be less than 60",
+    "flush_interval": 1,
+    "_save_logs_onto_file_Description_": "set true if the logs to be sent to file else set false",
+    "save_logs_onto_file": "true",
+    "_send_json_logs_to_kafka_description": "set true if the logs are to be sent to kafka else set false",
+    "send_json_logs_to_Kafka": "false",
+    "_include_extra_json_Description": "to include the extraJson set to true else false",
+    "include_extra_json": "false",
+    "__rollOverSize_Description__": "The rollover of the file to happen after how many GB(GigaBytes)",
+    "rollOverSize": 0.2,
+    "__fileName_Description__": "The name of the file to which logs are to be written to",
+    "fileName": "jsonLogstest.json",
+    "__parallelGeneration_Description__": "Set this to true if you want parallel writing to log files",
+    "parallelGeneration": "false",
+    "__filterTags_Description__": "Specifies the list of tags that you do not want to be included in the JSON logs written to file",
+    "filterTags": [],
+    "__totalLogSize_Description__": "Total size of the log files to generate in GB(GigaBytes)",
+    "totalLogSize": 1,
+    "__pastData_Description__": "This specifies the years/months/days old of data to generate. Set these values to 0 if you want current timeline.",
+    "pastData": {
+        "days": 0,
+        "months": 0,
+        "years": 0
+    },
+    "__daySpeed_Description__": "This specifies the speed at which a day is exhausted in log-generator timeline. If the value is n, the day will be exhausted n times faster. Set this value to 1 if you don't want to speed the day.",
+    "daySpeed": 1
+  }
+  
+  
+  
