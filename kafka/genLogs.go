@@ -49,7 +49,6 @@ type Config struct {
 	AuthToken          string                     `json:"auth_token"`
 	Tags               map[string]string          `json:"tags"`
 	VarTags            map[string][]string        `json:"varTags"`
-	ExtraTags          map[string]string          `json:"extraJson"`
 	MaxBulkCountFile   uint64                     `json:"max_bulk_count_file"`
 	MaxBulkCountKafka  uint64                     `json:"max_bulk_count_kafka"`
 	MaxBulkSize        uint64                     `json:"max_bulk_size"`
@@ -58,7 +57,6 @@ type Config struct {
 	RollOverSize       float64                    `json:"rollOverSize"`
 	FlushInterval      uint64                     `json:"flush_interval"`
 	SaveLogsToFile     string                     `json:"save_logs_onto_file"`
-	SendLargeJSONLogs  string                     `json:"include_extra_json"`
 	SendToKafka        string                     `json:"send_json_logs_to_Kafka"`
 	FileName           string                     `json:"fileName"`
 	ParallelGeneration string                     `json:"parallelGeneration"`
@@ -101,23 +99,6 @@ func getRandomLog(allLogs []string, config *Config) (map[string]interface{}, map
 
 	record = addVarTags(record, config)
 	record = addExtTags(record, extendedTags)
-
-	if config.SendLargeJSONLogs == "true" {
-		for key, value := range config.ExtraTags {
-			if key == "log_index" {
-				count = count + 1
-				record[key] = strconv.Itoa(count)
-			} else {
-				record[key] = strings.ReplaceAll(value, "", func(n int) string {
-					b := make([]rune, n)
-					for i := range b {
-						b[i] = letters[rand.Intn(len(letters))]
-					}
-					return string(b)
-				}(7))
-			}
-		}
-	}
 
 	message := strings.TrimSpace(strings.SplitN(logWithLevel[1], "=", 2)[1])
 	message = getRandomValue(message)
