@@ -1,0 +1,4 @@
+level=info, message = DHCPREQUEST of $IP  on ens5 to $IP port $INT(xid=0x333b7320)
+level=error, message = DHCPACK of $IP from $IP
+level=warn, message = Could not find an entry for this IP address ($IP)
+level=error, message = Did not receive identification string from $IP
