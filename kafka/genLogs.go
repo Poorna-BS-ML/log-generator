@@ -27,11 +27,15 @@ var client http.Client = http.Client{
 	Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}},
 }
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+var lowercaseLetters = []rune("abcdefghijklmnopqrstuvwxyz")
 
 var count = 0
 var timeCounter = 1
 
 var currentSize, fileCount, filesToWrite int = 0, 1, 0
+var lenOfSequence int = 4
+var filenameSequences = []string{""}
+var noOfSequences = 0
 
 var totalRollOverSize, totalLogSize float64
 var filename string
@@ -422,7 +426,7 @@ func checkLogSize(tempsize int, file *os.File, targetFile string, config *Config
 			fileCount = fileCount + 1
 			// currentSize = tempsize
 			currentSize = 0
-			filename = targetFile + "." + strconv.Itoa(fileCount)
+			filename = targetFile + "." + filenameSequences[fileCount] + "." + strconv.Itoa(fileCount)
 		} else {
 			fileStat, err := file.Stat()
 			if err != nil {
@@ -486,11 +490,32 @@ func getLifePeriodInHours(lifePeriod string) float64 {
 	return lpHours
 }
 
+func initializeFileName(lenOfSequence int, noOfSequences int) {
+	alphabets := 26
+	getFilenamesInSequence("", alphabets, lenOfSequence)
+}
+
+func getFilenamesInSequence(prefix string, alphabets int, lenOfSequence int) {
+	if lenOfSequence == 0 {
+		noOfSequences = noOfSequences - 1
+		filenameSequences = append(filenameSequences, prefix)
+		return
+	}
+
+	for i := 0; i < alphabets; i++ {
+		if noOfSequences == 0 {
+			break
+		}
+		newPrefix := prefix + string(lowercaseLetters[i])
+		getFilenamesInSequence(newPrefix, alphabets, lenOfSequence-1)
+	}
+}
+
 func initExtendedTags(config *Config) {
 	fmt.Println("config.ExtendedTags:", config.ExtendedTags)
 	for _, t := range config.ExtendedTags {
 		fmt.Println("t:", t)
-		var extTags extendedTagsStruct
+		var extTags extendedTagsStruct.;
 		extTags.tagName = t.TagName
 		extTags.tagValue = t.TagValue
 		extTags.lifePeriodHours = getLifePeriodInHours(t.LifePeriod)
@@ -506,8 +531,10 @@ func initValues(config *Config) {
 	if config.TotalLogSize > 0 {
 		totalLogSize = config.TotalLogSize * 1073741824
 		filesToWrite = int(config.TotalLogSize / config.RollOverSize)
+		noOfSequences = filesToWrite
+		initializeFileName(lenOfSequence, noOfSequences)
 	}
-	filename = config.FileName + "." + strconv.Itoa(fileCount)
+	filename = config.FileName + "." + filenameSequences[fileCount] + "." + strconv.Itoa(fileCount)
 	keysToFilter = config.FilterTags
 }
 
