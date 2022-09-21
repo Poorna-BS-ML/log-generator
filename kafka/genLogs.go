@@ -469,16 +469,13 @@ func trackTime(config *Config) {
 }
 
 func getLifePeriodInHours(lifePeriod string) float64 {
-	fmt.Println("lifePeriod:", lifePeriod)
 	var lpHours float64
 	timeUnit := lifePeriod[len(lifePeriod)-1:]
-	fmt.Println("timeUnit:", timeUnit)
 	timeDuration, err := strconv.ParseFloat(lifePeriod[:len(lifePeriod)-1], 64)
 	if err != nil {
 		fmt.Println("Error in parsing life_period value.")
 		log.Fatal(err)
 	}
-	fmt.Println("timeDuration:", timeDuration)
 	if timeUnit == "h" {
 		lpHours = timeDuration
 	} else if timeUnit == "d" {
@@ -486,7 +483,6 @@ func getLifePeriodInHours(lifePeriod string) float64 {
 	} else {
 		log.Fatal("Invalid time unit given for life period of the extended tags. Use either h(hours) or d(days).")
 	}
-	fmt.Println("lpHours:", lpHours)
 	return lpHours
 }
 
@@ -512,15 +508,12 @@ func getFilenamesInSequence(prefix string, alphabets int, lenOfSequence int) {
 }
 
 func initExtendedTags(config *Config) {
-	fmt.Println("config.ExtendedTags:", config.ExtendedTags)
 	for _, t := range config.ExtendedTags {
-		fmt.Println("t:", t)
-		var extTags extendedTagsStruct.;
+		var extTags extendedTagsStruct
 		extTags.tagName = t.TagName
 		extTags.tagValue = t.TagValue
 		extTags.lifePeriodHours = getLifePeriodInHours(t.LifePeriod)
 		extTags.startTime = time.Now().Add(1 * time.Minute) // because log generation starts after 1 minute
-		fmt.Println("start time for", t.TagName, "is", extTags.startTime)
 		extendedTags = append(extendedTags, extTags)
 	}
 }
