@@ -23,9 +23,18 @@ import (
 const logGenTimeTicker = 100
 
 var client http.Client = http.Client{
-	Timeout:   30 * time.Second,
-	Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}},
+	Timeout: 45 * time.Second,
+	Transport: &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
+		MaxConnsPerHost:     0,
+		MaxIdleConns:        50,
+		MaxIdleConnsPerHost: 50,
+		IdleConnTimeout:     3 * time.Second,
+	},
 }
+
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 var lowercaseLetters = []rune("abcdefghijklmnopqrstuvwxyz")
 
