@@ -31,7 +31,7 @@ var client http.Client = http.Client{
 		MaxConnsPerHost:     0,
 		MaxIdleConns:        50,
 		MaxIdleConnsPerHost: 50,
-		IdleConnTimeout:     3 * time.Second,
+		IdleConnTimeout:     10 * time.Second,
 	},
 }
 
